@@ -580,6 +580,17 @@ module Rails
       end
     end
 
+    def eager_load!
+      # Checks defined?(Zeitwerk) instead of zeitwerk_enabled? because we want
+      # to eager load any dependency managed by Zeitwerk regardless of the
+      # autoloading mode of the application.
+      Zeitwerk::Loader.eager_load_all if defined?(Zeitwerk)
+      super
+      config.eager_load_namespaces.each do |namespace|
+        namespace.eager_load! unless namespace == self
+      end
+    end
+
     private
       def generate_development_secret
         if secrets.secret_key_base.nil?
