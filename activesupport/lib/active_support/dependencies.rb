@@ -334,7 +334,7 @@ module ActiveSupport #:nodoc:
       require_or_load(path || file_name)
     rescue LoadError => load_error
       if file_name = load_error.message[/ -- (.*?)(\.rb)?$/, 1]
-        load_error.message.replace(message % file_name)
+        load_error.message = message % file_name
         load_error.copy_blame!(load_error)
       end
       raise
