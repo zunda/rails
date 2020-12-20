@@ -363,7 +363,7 @@ module ActiveRecord
 
         index_options = options.delete(:index)
         index(name, index_options.is_a?(Hash) ? index_options : {}) if index_options
-        @columns_hash[name] = new_column_definition(name, type, options)
+        @columns_hash[name] = new_column_definition(name, type, **options)
         self
       end
 
