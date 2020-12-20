@@ -128,8 +128,8 @@ module ActiveRecord
     end
 
     module ClassMethods # :nodoc:
-      def create(klass, *args)
-        relation_class_for(klass).new(klass, *args)
+      def create(klass, **args)
+        relation_class_for(klass).new(klass, **args)
       end
 
       private
