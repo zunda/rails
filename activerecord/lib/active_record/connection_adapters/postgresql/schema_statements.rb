@@ -637,7 +637,9 @@ module ActiveRecord
           end
 
           def create_table_definition(*args)
-            PostgreSQL::TableDefinition.new(*args)
+            name, opts = args
+            opts ||= {}
+            PostgreSQL::TableDefinition.new(name, **opts)
           end
 
           def create_alter_table(name)
