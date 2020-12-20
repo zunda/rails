@@ -442,7 +442,7 @@ module ActiveSupport
         options = merged_options(options)
 
         instrument(:write, name, options) do
-          entry = Entry.new(value, options.merge(version: normalize_version(name, options)))
+          entry = Entry.new(value, **options.merge(version: normalize_version(name, options)))
           write_entry(normalize_key(name, options), entry, options)
         end
       end
