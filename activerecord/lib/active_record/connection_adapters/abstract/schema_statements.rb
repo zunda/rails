@@ -312,7 +312,7 @@ module ActiveRecord
 
         unless supports_indexes_in_create?
           td.indexes.each do |column_name, index_options|
-            add_index(table_name, column_name, index_options)
+            add_index(table_name, column_name, **index_options)
           end
         end
 
@@ -1159,7 +1159,7 @@ module ActiveRecord
         if data_source_exists?(table_name) && index_name_exists?(table_name, index_name)
           raise ArgumentError, "Index name '#{index_name}' on table '#{table_name}' already exists"
         end
-        index_columns = quoted_columns_for_index(column_names, options).join(", ")
+        index_columns = quoted_columns_for_index(column_names, **options).join(", ")
 
         [index_name, index_type, index_columns, index_options, algorithm, using, comment]
       end
@@ -1206,7 +1206,7 @@ module ActiveRecord
         # the PostgreSQL adapter for supporting operator classes.
         def add_options_for_index_columns(quoted_columns, **options)
           if supports_index_sort_order?
-            quoted_columns = add_index_sort_order(quoted_columns, options)
+            quoted_columns = add_index_sort_order(quoted_columns, **options)
           end
 
           quoted_columns
@@ -1216,7 +1216,7 @@ module ActiveRecord
           return [column_names] if column_names.is_a?(String)
 
           quoted_columns = Hash[column_names.map { |name| [name.to_sym, quote_column_name(name).dup] }]
-          add_options_for_index_columns(quoted_columns, options).values
+          add_options_for_index_columns(quoted_columns, **options).values
         end
 
         def index_name_for_remove(table_name, options = {})
