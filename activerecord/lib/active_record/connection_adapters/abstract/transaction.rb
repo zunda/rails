@@ -94,7 +94,8 @@ module ActiveRecord
       attr_reader :connection, :state, :records, :savepoint_name
       attr_writer :joinable
 
-      def initialize(connection, options, run_commit_callbacks: false)
+      def initialize(connection, options, **args)
+        run_commit_callbacks = args.has_key?(:run_commit_callbacks) ? args[:run_commit_callbacks] : false
         @connection = connection
         @state = TransactionState.new
         @records = []
@@ -167,7 +168,7 @@ module ActiveRecord
     end
 
     class RealTransaction < Transaction
-      def initialize(connection, options, *args)
+      def initialize(connection, options, **args)
         super
         if options[:isolation]
           connection.begin_isolated_db_transaction(options[:isolation])
