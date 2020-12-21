@@ -305,13 +305,13 @@ module ActiveRecord
       with_transaction_returning_status { super }
     end
 
-    def save(**) #:nodoc:
+    def save(*) #:nodoc:
       rollback_active_record_state! do
         with_transaction_returning_status { super }
       end
     end
 
-    def save!(**) #:nodoc:
+    def save!(*) #:nodoc:
       with_transaction_returning_status { super }
     end
 

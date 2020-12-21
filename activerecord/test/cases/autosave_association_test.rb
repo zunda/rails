@@ -847,7 +847,7 @@ class TestDestroyAsPartOfAutosaveAssociation < ActiveRecord::TestCase
   def test_should_rollback_destructions_if_an_exception_occurred_while_saving_a_child
     # Stub the save method of the @pirate.ship instance to destroy and then raise an exception
     class << @pirate.ship
-      def save(**args)
+      def save(*args)
         super
         destroy
         raise "Oh noes!"
@@ -908,7 +908,7 @@ class TestDestroyAsPartOfAutosaveAssociation < ActiveRecord::TestCase
   def test_should_rollback_destructions_if_an_exception_occurred_while_saving_a_parent
     # Stub the save method of the @ship.pirate instance to destroy and then raise an exception
     class << @ship.pirate
-      def save(**args)
+      def save(*args)
         super
         destroy
         raise "Oh noes!"
@@ -1288,7 +1288,7 @@ class TestAutosaveAssociationOnAHasOneAssociation < ActiveRecord::TestCase
 
     # Stub the save method of the @pirate.ship instance to raise an exception
     class << @pirate.ship
-      def save(**args)
+      def save(*args)
         super
         raise "Oh noes!"
       end
@@ -1325,7 +1325,7 @@ class TestAutosaveAssociationOnAHasOneThroughAssociation < ActiveRecord::TestCas
     member = create_member_with_organization
 
     class << member.organization
-      def save(**args)
+      def save(*args)
         super
         raise "Oh noes!"
       end
@@ -1346,7 +1346,7 @@ class TestAutosaveAssociationOnAHasOneThroughAssociation < ActiveRecord::TestCas
     author = create_author_with_post_with_comment
 
     class << author.comment_on_first_post
-      def save(**args)
+      def save(*args)
         super
         raise "Oh noes!"
       end
@@ -1436,7 +1436,7 @@ class TestAutosaveAssociationOnABelongsToAssociation < ActiveRecord::TestCase
 
     # Stub the save method of the @ship.pirate instance to raise an exception
     class << @ship.pirate
-      def save(**args)
+      def save(*args)
         super
         raise "Oh noes!"
       end
@@ -1590,7 +1590,7 @@ module AutosaveAssociationOnACollectionAssociationTests
 
     # Stub the save method of the first child instance to raise an exception
     class << @pirate.send(@association_name).first
-      def save(**args)
+      def save(*args)
         super
         raise "Oh noes!"
       end
